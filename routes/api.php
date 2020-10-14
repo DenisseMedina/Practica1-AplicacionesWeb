@@ -107,7 +107,15 @@ Route::post('/comentarios/{comentario?}/{persona_id?}/{publicacion_id?}','Coment
 
 //BuscarComentarios
 Route::post('/buscar/{id?}', 'ComentariosController@buscar')
-->where(['id','[0-9]+']);
+    ->where(['id','[0-9]+']);
+
+Route::get('comentarios/publicacion/{publicacion_id}/{id?}','ComentariosController@comentarioPublicacion')
+    ->where( ['id'=>'[0-9]+','
+          pub_id'=>'[0-9]+']);
+    
+ Route::get('comentarios/persona/{persona_id}/{id?}','ComentariosController@comentarioPersona')
+    ->where( ['id'=>'[0-9]+','
+             persona_id'=>'[0-9]+']);
 
 //ActualizarComentario
 Route::put('/actualizar/{id?}/comentario/{comentario}', 'ComentariosController@modificarComentario')

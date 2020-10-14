@@ -120,4 +120,18 @@ class ComentariosController extends Controller
                                 "comentario" => \App\Comentarios::all()
                                 ],200);
 }
+    public function comentarioPublicacion( int $pub_id, int $id ){
+         return response()->json([
+        'publicaciones'=>( $id==null)? 
+        Comentarios::where('publicacion_id', $pub_id)->get():
+        Comentarios::where('publicacion_id', $pub_id)->where('id',$id)->get()
+    ],200);
+}
+    public function comentarioPersona(int $persona_id,int $id ){
+        return response()->json([
+        'persona'=>( $id==null)? 
+        Comentarios::where('persona_id', $persona_id)->get():
+        Comentarios::where('persona_id', $persona_id)->where('id',$id)->get()
+    ],200);
+}
 } 

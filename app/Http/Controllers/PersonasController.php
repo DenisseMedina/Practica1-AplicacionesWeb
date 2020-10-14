@@ -163,8 +163,6 @@ class PersonasController extends Controller
                                                              "Sexo Actualizado"
                                                             ],200);
 }
-
-
     public function eliminar(int $id){
                                     $eliminarPersona = \App\Personas::find($id);
                                     $eliminarPersona->delete();
@@ -173,5 +171,6 @@ class PersonasController extends Controller
                                                               "persona" => \App\Personas::all()
                                                             ],200);
     }
+    
 
 }
