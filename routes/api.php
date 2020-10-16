@@ -29,7 +29,7 @@ Route::post('/mostrar/{nombre?}/{apellidoPaterno?}/{apellidoMaterno?}/{edad?}/{s
     'id'=>'[0-9]+',
     ]);
 
-//RegistarPersona
+//InsertaPersona
 Route::post('/persona/{nombre?}/{apellidoPaterno?}/{apellidoMaterno?}/{edad?}/{sexo?}','PersonasController@persona')
    ->where(
     ['nombre'=>'[a-zA-Z]+',
@@ -39,8 +39,8 @@ Route::post('/persona/{nombre?}/{apellidoPaterno?}/{apellidoMaterno?}/{edad?}/{s
     'edad'=>'[0-9]+',
     ]);
 
-//BuscarPersona
-Route::post('/buscar/{id?}', 'PersonasController@buscar')
+//BuscarPersonas
+Route::post('/persona/{id?}', 'PersonasController@buscar')
     ->where(['id','[0-9]+']);
 
 //ActualizarCampos
@@ -65,7 +65,7 @@ Route::put('/modificar/{id?}/sexo/{sexo}', 'PersonasController@modificarSexo')
     'sexo'=>'[a-zA-Z]+',]);
 
 //EliminarCampos
-Route::delete('/eliminar/{id?}', 'PersonasController@eliminar')
+Route::delete('/personas/{id?}', 'PersonasController@eliminar')
     ->where(['id'=>'[0-9]+']);
 
 //InsertarPublicaciones
@@ -75,14 +75,11 @@ Route::post('/publicacion/{titulo?}/{texto?}/{persona_id?}/','PublicacionesContr
     'texto'=>'[a-zA-Z]+',
     'persona_id'=>'[0-9]+',
     ]);
+
 //BuscarPublicaciones
-Route::post('/buscar/{id?}', 'PublicacionesController@buscar')
+Route::post('/publicaciones/{id?}', 'PublicacionesController@buscar')
     ->where(['id','[0-9]+']);
-Route::get('/buscar/persona/{persona?}/publicacion/{publicacion?}','PublicacionesController@pubPersona')
-    ->where(
-    ['persona' => '[0-9]+',
-     'publicacion' =>'[0-9]+'
-    ]);
+
 
 //ActualizarPublicaciones
 Route::put('/actualizar/publicacion/{id?}/titulo/{titulo}', 'PublicacionesController@modificarTitulo')
@@ -94,7 +91,7 @@ Route::put('/actualizar/publicacion/{id?}/texto/{texto}', 'PublicacionesControll
     'texto'=>'[a-zA-Z]+',]);
 
 //EliminarPublicaciones
-Route::delete('/eliminar/publicacion/{id}', 'PublicacionesController@eliminar')
+Route::delete('/eliminar/publicaciones/{id}', 'PublicacionesController@eliminar')
     ->where(['id'=>'[0-9]+']);
 
 //InsertarComentarios
@@ -109,16 +106,8 @@ Route::post('/comentarios/{comentario?}/{persona_id?}/{publicacion_id?}','Coment
 Route::post('/buscar/{id?}', 'ComentariosController@buscar')
     ->where(['id','[0-9]+']);
 
-Route::get('comentarios/publicacion/{publicacion_id}/{id?}','ComentariosController@comentarioPublicacion')
-    ->where( ['id'=>'[0-9]+','
-          pub_id'=>'[0-9]+']);
-    
- Route::get('comentarios/persona/{persona_id}/{id?}','ComentariosController@comentarioPersona')
-    ->where( ['id'=>'[0-9]+','
-             persona_id'=>'[0-9]+']);
-
 //ActualizarComentario
-Route::put('/actualizar/{id?}/comentario/{comentario}', 'ComentariosController@modificarComentario')
+Route::put('/actualizar/{id?}/comentario/{comentario}', 'ComentariosController@modificar')
     ->where(['id'=>'[0-9]+',
     'texto'=>'[a-zA-Z]+',]);
 
@@ -127,5 +116,29 @@ Route::delete('/eliminar/comentarios/{id}', 'ComentariosController@eliminar')
     ->where(['id'=>'[0-9]+']);
 
 
+//Consultas    
+//Buscar determinada persona con determinada Publicacion/ Buscar todas las publicaciones de una persona 
+Route::get('/buscar/persona/{persona?}/publicacion/{publicacion?}','PublicacionesController@pubPersona')
+    ->where(
+    ['persona' => '[0-9]+',
+     'publicacion' =>'[0-9]+'
+    ]);
 
+//Buscar determinada publicacion con determinas comentario / Buscar todos los comentarios de una Determinada Publicacion
+Route::get('comentarios/{publicacion_id}/publicacion/{id?}','ComentariosController@comentarioPublicacion')
+->where( ['id'=>'[0-9]+','
+      pub_id'=>'[0-9]+']);
 
+//Buscar determinada persona con determinado comentario / Buscar todos los comentarios de una Determinada Persona       
+Route::get('comentarios/{persona_id}/persona/{id?}','ComentariosController@comentarioPersona')
+->where( ['id'=>'[0-9]+','
+         persona_id'=>'[0-9]+']);
+
+//Buscar determinado comentarios de determinada publicacion de determinda persona
+Route::get('/persona/{persona_id}/publicaciones/{publicacion_id}/comentarios/{id?}','ComentariosController@comentarioPublicacionPersona')
+->where( ['id'=>'[0-9]+',
+'persona_id'=>'[0-9]+',
+'publicacion_id'=>'[0-9]+']);
+
+//Buscar toda la base de datos
+Route::get('personas/publicaciones/comentarios','ComentariosController@todaBaseDatos');

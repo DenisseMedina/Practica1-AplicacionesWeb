@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Comentarios;
 use Illuminate\Http\Request;
+
 
 class ComentariosController extends Controller
 {
@@ -92,7 +94,7 @@ class ComentariosController extends Controller
 
         return response()->json ([
             "Insertar Comentario",
-        ],200);
+        ],201);
     }
 
     public function buscar(int $id=0){
@@ -103,7 +105,7 @@ class ComentariosController extends Controller
     
     } 
 
-    public function modificarComentario (int $id, string $comentario){
+    public function modificar(int $id, string $comentario){
         $modificarComentario = \App\Comentarios::find($id);
         $modificarComentario->comentario = $comentario;
         $modificarComentario->save();
@@ -120,6 +122,14 @@ class ComentariosController extends Controller
                                 "comentario" => \App\Comentarios::all()
                                 ],200);
 }
+    public function comentarioPersona(int $persona_id,int $id=null ){
+        return response()->json([
+        'persona'=>( $id==null)? 
+        Comentarios::where('persona_id', $persona_id)->get():
+        Comentarios::where('persona_id', $persona_id)->where('id',$id)->get()
+    ],200);
+
+}
     public function comentarioPublicacion( int $pub_id, int $id=null ){
          return response()->json([
         'publicaciones'=>( $id==null)? 
@@ -127,11 +137,19 @@ class ComentariosController extends Controller
         Comentarios::where('publicacion_id', $pub_id)->where('id',$id)->get()
     ],200);
 }
-    public function comentarioPersona(int $persona_id,int $id=null ){
+    public function comentarioPublicacionPersona(int $persona_id, int $publicacion_id, int $id=null){
         return response()->json([
         'persona'=>( $id==null)? 
-        Comentarios::where('persona_id', $persona_id)->get():
-        Comentarios::where('persona_id', $persona_id)->where('id',$id)->get()
+        Comentarios::where('persona_id', $persona_id)->where('publicacion_id', $publicacion_id)->get():
+        Comentarios::where('persona_id', $persona_id)->where('publicacion_id', $publicacion_id)->where('id',$id)->get()
     ],200);
-}
+} 
+    public function todaBaseDatos(){
+        return response()->json([
+        'Toda la Base de Datos'=>DB::table('comentarios')
+        ->join('publicaciones','publicaciones.id', '=', 'comentarios.publicacion_id')
+        ->join ('personas','personas.id','=', 'comentarios.persona_id')
+        ->select('comentarios.*', 'publicaciones.*','personas.*')->get()
+    ],200);
+} 
 } 

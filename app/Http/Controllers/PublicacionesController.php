@@ -93,8 +93,7 @@ class PublicacionesController extends Controller
 
         return response()->json ([
             "Insertar Publicacion",
-             ],200
-    );
+             ],201);
     }
 
     public function buscar(int $id=0){
