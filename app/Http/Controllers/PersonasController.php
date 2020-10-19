@@ -113,10 +113,10 @@ class PersonasController extends Controller
     }*/
 
     public function buscar(int $id=0){
-
+        
         return response()->json([
-                                "persona"=> ($id == 0)? \App\Personas::all():\App\Personas::find($id)
-                                ],200);
+            "Personas"=>($id == 0)?\App\Personas::all():\App\Personas::find($id)
+            ],200);
     }
 
     public function modificarNombre (int $id, string $nombre){

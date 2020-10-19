@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//PERSONAS
 //MostarPersona
 Route::post('/mostrar/{nombre?}/{apellidoPaterno?}/{apellidoMaterno?}/{edad?}/{sexo?}/{id}','PersonasController@mostrar')
     ->where(
@@ -28,9 +29,9 @@ Route::post('/mostrar/{nombre?}/{apellidoPaterno?}/{apellidoMaterno?}/{edad?}/{s
     'edad'=>'[0-9]+',
     'id'=>'[0-9]+',
     ]);
-
+   
 //InsertaPersona
-Route::post('/persona/{nombre?}/{apellidoPaterno?}/{apellidoMaterno?}/{edad?}/{sexo?}','PersonasController@persona')
+Route::get('/persona/{nombre?}/{apellidoPaterno?}/{apellidoMaterno?}/{edad?}/{sexo?}','PersonasController@persona')
    ->where(
     ['nombre'=>'[a-zA-Z]+',
     'apellidoPaterno'=>'[a-zA-Z]+',
@@ -40,9 +41,9 @@ Route::post('/persona/{nombre?}/{apellidoPaterno?}/{apellidoMaterno?}/{edad?}/{s
     ]);
 
 //BuscarPersonas
-Route::post('/persona/{id?}', 'PersonasController@buscar')
-    ->where(['id','[0-9]+']);
-
+Route::get('/persona/buscar/{id?}', 'PersonasController@buscar')
+    ->where(['id'=>'[0-9]+']);
+     
 //ActualizarCampos
 Route::put('/modificar/{id?}/nombre/{nombre}', 'PersonasController@modificarNombre')
     ->where(['id'=>'[0-9]+',
@@ -68,6 +69,7 @@ Route::put('/modificar/{id?}/sexo/{sexo}', 'PersonasController@modificarSexo')
 Route::delete('/personas/{id?}', 'PersonasController@eliminar')
     ->where(['id'=>'[0-9]+']);
 
+//PUBLICACIONES
 //InsertarPublicaciones
 Route::post('/publicacion/{titulo?}/{texto?}/{persona_id?}/','PublicacionesController@publicaciones')
    ->where(
@@ -77,9 +79,8 @@ Route::post('/publicacion/{titulo?}/{texto?}/{persona_id?}/','PublicacionesContr
     ]);
 
 //BuscarPublicaciones
-Route::post('/publicaciones/{id?}', 'PublicacionesController@buscar')
+Route::get('/publicaciones/{id?}', 'PublicacionesController@buscar')
     ->where(['id','[0-9]+']);
-
 
 //ActualizarPublicaciones
 Route::put('/actualizar/publicacion/{id?}/titulo/{titulo}', 'PublicacionesController@modificarTitulo')
@@ -93,17 +94,18 @@ Route::put('/actualizar/publicacion/{id?}/texto/{texto}', 'PublicacionesControll
 //EliminarPublicaciones
 Route::delete('/eliminar/publicaciones/{id}', 'PublicacionesController@eliminar')
     ->where(['id'=>'[0-9]+']);
-
+    
+//COMENTARIOS
 //InsertarComentarios
-Route::post('/comentarios/{comentario?}/{persona_id?}/{publicacion_id?}','ComentariosController@comentarios')
+Route::get('/comentarios/{comentario?}/{persona_id?}/{publicacion_id?}','ComentariosController@comentarios')
    ->where(
     ['comentario'=>'[a-zA-Z]+',
     'persona_id'=>'[0-9]+',
     'publicacion_id'=>'[0-9]+',
     ]);
-
+ 
 //BuscarComentarios
-Route::post('/buscar/{id?}', 'ComentariosController@buscar')
+Route::get('/buscar/{id?}', 'ComentariosController@buscar')
     ->where(['id','[0-9]+']);
 
 //ActualizarComentario
@@ -116,7 +118,7 @@ Route::delete('/eliminar/comentarios/{id}', 'ComentariosController@eliminar')
     ->where(['id'=>'[0-9]+']);
 
 
-//Consultas    
+//CONSULTAS    
 //Buscar determinada persona con determinada Publicacion/ Buscar todas las publicaciones de una persona 
 Route::get('/buscar/persona/{persona?}/publicacion/{publicacion?}','PublicacionesController@pubPersona')
     ->where(
@@ -134,11 +136,12 @@ Route::get('comentarios/{persona_id}/persona/{id?}','ComentariosController@comen
 ->where( ['id'=>'[0-9]+','
          persona_id'=>'[0-9]+']);
 
+//Buscar toda la base de datos
+Route::get('personas/publicaciones/comentarios','ComentariosController@todaBaseDatos');
+
 //Buscar determinado comentarios de determinada publicacion de determinda persona
 Route::get('/persona/{persona_id}/publicaciones/{publicacion_id}/comentarios/{id?}','ComentariosController@comentarioPublicacionPersona')
 ->where( ['id'=>'[0-9]+',
 'persona_id'=>'[0-9]+',
 'publicacion_id'=>'[0-9]+']);
 
-//Buscar toda la base de datos
-Route::get('personas/publicaciones/comentarios','ComentariosController@todaBaseDatos');
