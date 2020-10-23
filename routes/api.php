@@ -120,7 +120,7 @@ Route::delete('/eliminar/comentarios/{id}', 'ComentariosController@eliminar')
 
 //CONSULTAS    
 //Buscar determinada persona con determinada Publicacion/ Buscar todas las publicaciones de una persona 
-Route::get('/buscar/persona/{persona?}/publicacion/{publicacion?}','PublicacionesController@pubPersona')
+Route::get('/buscar/persona/{persona}/publicacion/{publicacion?}','PublicacionesController@pubPersona')
     ->where(
     ['persona' => '[0-9]+',
      'publicacion' =>'[0-9]+'

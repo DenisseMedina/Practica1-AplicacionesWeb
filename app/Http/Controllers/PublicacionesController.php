@@ -83,12 +83,12 @@ class PublicacionesController extends Controller
      
     }
 
-    public function publicaciones(string $titulo, string $texto, int $persona_id){
+    public function publicaciones(string $titulo, string $texto, int $usuario_id){
 
         $insertaPublicacion = new \App\Publicaciones;
         $insertaPublicacion->titulo =$titulo;
         $insertaPublicacion->texto =$texto;
-        $insertaPublicacion->persona_id =$persona_id;   
+        $insertaPublicacion->usaurio_id =$usuario_id;   
         $insertaPublicacion->save();
 
         return response()->json ([
@@ -131,11 +131,11 @@ public function eliminar(int $id){
                                     "Publicacion" => \App\Publicaciones::all()
                     ],200);
 }   
-public function pubPersona(int $persona, int $publicacion = null){
+public function pubPersona(int $usaurio, int $publicacion = null){
 
     return response()->json([
-                            "publicaciones realizadas"=>($publicacion == null)?\App\Publicaciones::where('persona_id', $persona)
-                            ->get():\App\Publicaciones::where('persona_id', $persona)->where('id',$publicacion)->get()
+                            "publicaciones realizadas"=>($publicacion == null)?\App\Publicaciones::where('usaurio_id', $persona)
+                            ->get():\App\Publicaciones::where('usaurio_id', $usaurio)->where('id',$publicacion)->get()
                             ],200);
 }
 }

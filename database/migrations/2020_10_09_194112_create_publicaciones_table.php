@@ -17,8 +17,8 @@ class CreatePublicacionesTable extends Migration
             $table->bigIncrements('id');
             $table->string('titulo');
             $table->string('texto');
-            $table->unsignedBigInteger('persona_id');
-            $table->foreign('persona_id')->references('id')->on('personas');
+            $table->unsignedBigInteger('usuario_id');
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
             $table->timestamps();
         });
     }

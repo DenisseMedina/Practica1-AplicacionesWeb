@@ -84,11 +84,11 @@ class ComentariosController extends Controller
     {
         //
     }
-    public function comentarios(string $comentario, string $persona_id, int $publicacion_id){
+    public function comentarios(string $comentario, string $usuario_id, int $publicacion_id){
 
         $insertaComentario = new \App\Comentarios;
         $insertaComentario->comentario =$comentario;
-        $insertaComentario->persona_id =$persona_id;
+        $insertaComentario->usuario_id =$usuario_id;
         $insertaComentario->publicacion_id =$publicacion_id;   
         $insertaComentario->save();
 
@@ -122,11 +122,11 @@ class ComentariosController extends Controller
                                 "comentario" => \App\Comentarios::all()
                                 ],200);
 }
-    public function comentarioPersona(int $persona_id,int $id=null ){
+    public function comentarioPersona(int $usuario_id,int $id=null ){
         return response()->json([
         'persona'=>( $id==null)? 
-        Comentarios::where('persona_id', $persona_id)->get():
-        Comentarios::where('persona_id', $persona_id)->where('id',$id)->get()
+        Comentarios::where('usuario_id', $usuario_id)->get():
+        Comentarios::where('usuario_id', $usaurio_id)->where('id',$id)->get()
     ],200);
 
 }
@@ -137,11 +137,11 @@ class ComentariosController extends Controller
         Comentarios::where('publicacion_id', $pub_id)->where('id',$id)->get()
     ],200);
 }
-    public function comentarioPublicacionPersona(int $persona_id, int $publicacion_id, int $id=null){
+    public function comentarioPublicacionPersona(int $usuario_id, int $publicacion_id, int $id=null){
         return response()->json([
         'persona'=>( $id==null)? 
-        Comentarios::where('persona_id', $persona_id)->where('publicacion_id', $publicacion_id)->get():
-        Comentarios::where('persona_id', $persona_id)->where('publicacion_id', $publicacion_id)->where('id',$id)->get()
+        Comentarios::where('usuario_id', $usuario_id)->where('publicacion_id', $publicacion_id)->get():
+        Comentarios::where('usuario_id', $usuario_id)->where('publicacion_id', $publicacion_id)->where('id',$id)->get()
     ],200);
 } 
     public function todaBaseDatos(){
