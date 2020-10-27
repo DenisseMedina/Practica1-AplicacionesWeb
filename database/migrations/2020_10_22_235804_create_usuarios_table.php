@@ -21,6 +21,8 @@ class CreateUsuariosTable extends Migration
             $table->rememberToken();  
             $table->unsignedBigInteger('persona_id');
             $table->foreign('persona_id')->references('id')->on('personas');  
+            $table->unsignedBigInteger('rol_id');
+            $table->foreign('rol_id')->references('id')->on('roles'); 
             $table->timestamps();
         });
     }

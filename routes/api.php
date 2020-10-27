@@ -17,53 +17,20 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-//PERSONAS
-//MostarPersona
-Route::post('/mostrar/{nombre?}/{apellidoPaterno?}/{apellidoMaterno?}/{edad?}/{sexo?}/{id}','PersonasController@mostrar')
-    ->where(
-    ['nombre'=>'[a-zA-Z]+',
-    'apellidoPaterno'=>'[a-zA-Z]+',
-    'apellidoMaterno'=>'[a-zA-Z]+',
-    'sexo'=>'[a-zA-Z]+',
-    'edad'=>'[0-9]+',
-    'id'=>'[0-9]+',
-    ]);
    
 //InsertaPersona
-Route::get('/persona/{nombre?}/{apellidoPaterno?}/{apellidoMaterno?}/{edad?}/{sexo?}','PersonasController@persona')
-   ->where(
-    ['nombre'=>'[a-zA-Z]+',
-    'apellidoPaterno'=>'[a-zA-Z]+',
-    'apellidoMaterno'=>'[a-zA-Z]+',
-    'sexo'=>'[a-zA-Z]+',
-    'edad'=>'[0-9]+',
-    ]);
+Route::get('/persona/registro','PersonasController@persona')->middleware('verificar.edad');
 
 //BuscarPersonas
-Route::get('/persona/buscar/{id?}', 'PersonasController@buscar')
+Route::get('/persona/buscar', 'PersonasController@buscar')
     ->where(['id'=>'[0-9]+']);
      
 //ActualizarCampos
-Route::put('/modificar/{id?}/nombre/{nombre}', 'PersonasController@modificarNombre')
-    ->where(['id'=>'[0-9]+',
-    'nombre'=>'[a-zA-Z]+',]);
-
-Route::put('/modificar/{id?}/apellidoPaterno/{apellidoPaterno}', 'PersonasController@modificarApellidoPaterno')
-    ->where(['id'=>'[0-9]+',
-    'nombre'=>'[a-zA-Z]+',]);
-
-Route::put('/modificar/{id?}/apellidoMaterno/{apellioMaterno}', 'PersonasController@modificarApellidoMaterno')
-    ->where(['id'=>'[0-9]+',
-    'nombre'=>'[a-zA-Z]+',]);
-
-Route::put('/modificar/{id?}/edad/{edad}', 'PersonasController@modificarEdad')
-    ->where(['id'=>'[0-9]+',
-    'edad'=>'[0-9]+',]);
-
-Route::put('/modificar/{id?}/sexo/{sexo}', 'PersonasController@modificarSexo')
-    ->where(['id'=>'[0-9]+',
-    'sexo'=>'[a-zA-Z]+',]);
+Route::put('/modificar/nombre','PersonasController@modificarNombre');
+Route::put('/modificar/apellidopaterno','PersonasController@modificarApellidoPaterno');
+Route::put('/modificar/apellidomaterno','PersonasController@modificarApellidoMaterno');
+Route::put('/modificar/edad','PersonasController@modificarEdad');
+Route::put('/modificar/sexo','PersonasController@modificarSexo');
 
 //EliminarCampos
 Route::delete('/personas/{id?}', 'PersonasController@eliminar')
@@ -145,3 +112,5 @@ Route::get('/persona/{persona_id}/publicaciones/{publicacion_id}/comentarios/{id
 'persona_id'=>'[0-9]+',
 'publicacion_id'=>'[0-9]+']);
 
+//Mostrar todas las personas
+Route::get('/administradores/panel','RolesController@mostrarPersonas')->middleware('permisos.admin') ;
