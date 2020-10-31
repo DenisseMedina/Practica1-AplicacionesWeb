@@ -2,12 +2,28 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\Usuarios as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    
+    public function publicaciones(){
+        return $this-> hasMany('App/Publicaciones');
+    }
+    public function comentarios(){
+        return $this-> hasMany('App/Comentarios');
+    }
+    public function personas(){
+        return $this-> belongsTo('App/Personas');
+    }
+    public function roles(){
+        return $this-> belongsTo('App/Roles');
+    }
     use Notifiable;
 
     /**

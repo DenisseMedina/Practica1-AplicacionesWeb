@@ -9,7 +9,7 @@ $factory->define(Usuarios::class, function (Faker $faker) {
     return [
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'contraseña' => $faker->password(5,30),
+        'password' => $faker->password(5,30),
         'persona_id'=> $faker->numberBetween(1,20),
         'rol_id'=> $faker->numberBetween(1,2),
     ];

@@ -82,4 +82,10 @@ class UsuariosController extends Controller
     {
         //
     }
+    public function mostrar(){
+        $usuarios = usuarios::all();
+        return response()->json($usuarios,200);
+    } 
+
+ 
 }

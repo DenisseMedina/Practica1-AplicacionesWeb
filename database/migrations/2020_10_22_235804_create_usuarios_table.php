@@ -17,7 +17,7 @@ class CreateUsuariosTable extends Migration
             $table->bigIncrements('id');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('contraseña');
+            $table->string('password');
             $table->rememberToken();  
             $table->unsignedBigInteger('persona_id');
             $table->foreign('persona_id')->references('id')->on('personas');  

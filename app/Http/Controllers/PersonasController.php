@@ -6,8 +6,7 @@ use App\Personas;
 use Illuminate\Http\Request;
 
 class PersonasController extends Controller
-{
-    
+{ 
     public function persona(Request $request){
                         $insertaPersona = new \App\Personas;
                         $insertaPersona->nombre =$request->nombre;
@@ -69,15 +68,11 @@ class PersonasController extends Controller
                                             "Sexo Actualizado"
                                             ],200);
 }
-    public function eliminar(int $id){
-                    $eliminarPersona = \App\Personas::find($id);
+    public function eliminar(Request $request){
+                    $eliminarPersona = \App\Personas::find($request->id);
                     $eliminarPersona->delete();
                     return response()->json([
                                             "Persona Eliminada","persona" => \App\Personas::all()
                                             ],200);
     }
-
-    
-  
-
 }
